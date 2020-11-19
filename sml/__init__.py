@@ -374,7 +374,10 @@ class SmlFrame(list):
 
         self.bits = bitstring.ConstBitStream(octets)
         while self.bits.pos < self.bits.length:
-            self.append(SmlMessage(self.bits))
+            try:
+                self.append(SmlMessage(self.bits))
+            except SmlParserError as err:
+                logger.debug('Error in parsing message: %s', str(err))
 
 
 class SmlBase:
